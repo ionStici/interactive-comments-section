@@ -5,7 +5,7 @@ import assets from './state/Assets';
 const Comment = function (props) {
     const comment = props.data;
 
-    console.log(comment);
+    // console.log(comment.replies);
 
     return (
         <section className={styles.section}>
