@@ -9,6 +9,7 @@ const Comment = function (props) {
 
     return (
         <section className={styles.section}>
+            {/*  */}
             <div className={styles.profile}>
                 <picture>
                     <source srcSet={comment.user.image.webp} type="webp" />
@@ -23,13 +24,12 @@ const Comment = function (props) {
                 <p className={styles.name}>{comment.user.username}</p>
                 <p className={styles.date}>{comment.createdAt}</p>
             </div>
-
+            {/*  */}
             <p className={styles.content}>{comment.content}</p>
-
+            {/*  */}
             <div className={styles.rating}>
-                <button>
+                <button className={styles.rating_btn}>
                     <svg
-                        className={styles.plus}
                         width="11"
                         height="11"
                         xmlns="http://www.w3.org/2000/svg"
@@ -37,12 +37,9 @@ const Comment = function (props) {
                         {assets.icon_plus}
                     </svg>
                 </button>
-
-                <p className={styles.score}>{comment.score}</p>
-
-                <button>
+                <p className={styles.rating_score}>{comment.score}</p>
+                <button className={styles.rating_btn}>
                     <svg
-                        className={styles.minus}
                         width="11"
                         height="3"
                         xmlns="http://www.w3.org/2000/svg"
@@ -51,11 +48,14 @@ const Comment = function (props) {
                     </svg>
                 </button>
             </div>
-
-            <button className={styles.replay}>
-                <img src={assets.reply} alt="Reply" />
+            {/*  */}
+            <button className={styles.reply}>
+                <svg width="14" height="13" xmlns="http://www.w3.org/2000/svg">
+                    {assets.icon_reply}
+                </svg>
                 <span>Reply</span>
             </button>
+            {/*  */}
         </section>
     );
 };
