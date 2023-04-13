@@ -1,5 +1,5 @@
-import assets from "./Assets";
-import data from "./../data.json";
+import assets from './Assets';
+import data from './../data.json';
 
 const currentUser = data.currentUser;
 const comments = data.comments;
