@@ -8,10 +8,14 @@ const Comment = function (props) {
     const [prompt, setPromp] = React.useState('');
     const comment = props.data;
 
-    const displayPromp = () => {
+    const owner = comment.user.username === currentUser.username;
+
+    const displayPromp = ({ target }) => {
+        const type = target.closest('button').dataset.action_type;
+
         setPromp(
             <Prompt
-                type="reply"
+                type={type}
                 png={currentUser.image.png}
                 webp={currentUser.image.webp}
             />
@@ -62,27 +66,56 @@ const Comment = function (props) {
                 </div>
                 {/*  */}
                 <div className={styles.btnsWrapper}>
-                    <button className={styles.delete}>
-                        <svg
-                            width="14"
-                            height="14"
-                            xmlns="http://www.w3.org/2000/svg"
+                    {owner ? (
+                        <button
+                            className={styles.delete}
+                            onClick={displayPromp}
+                            data-action_type="delete"
                         >
-                            {assets.icon_edit}
-                        </svg>
-                        <span>Delete</span>
-                    </button>
+                            <svg
+                                width="12"
+                                height="14"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                {assets.icon_del}
+                            </svg>
+                            <span>Delete</span>
+                        </button>
+                    ) : (
+                        ''
+                    )}
 
-                    <button className={styles.reply} onClick={displayPromp}>
-                        <svg
-                            width="14"
-                            height="13"
-                            xmlns="http://www.w3.org/2000/svg"
+                    {owner ? (
+                        <button
+                            className={styles.reply_edit}
+                            onClick={displayPromp}
+                            data-action_type="edit"
                         >
-                            {assets.icon_reply}
-                        </svg>
-                        <span>Reply</span>
-                    </button>
+                            <svg
+                                width="14"
+                                height="14"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                {assets.icon_edit}
+                            </svg>
+                            <span>Edit</span>
+                        </button>
+                    ) : (
+                        <button
+                            className={styles.reply_edit}
+                            onClick={displayPromp}
+                            data-action_type="reply"
+                        >
+                            <svg
+                                width="14"
+                                height="13"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                {assets.icon_reply}
+                            </svg>
+                            <span>Reply</span>
+                        </button>
+                    )}
                 </div>
                 {/*  */}
             </article>

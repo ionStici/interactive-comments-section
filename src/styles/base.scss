@@ -31,13 +31,17 @@ body {
 }
 
 main {
+    max-width: 762px;
+    margin: 0 auto;
     padding: 32px 16px;
 
     @media only screen and (min-width: 768px) {
+        max-width: 794px;
         padding: 64px 32px;
     }
 }
 
-button {
+button,
+textarea {
     font-family: inherit;
 }

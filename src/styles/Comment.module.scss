@@ -190,22 +190,50 @@
 
     display: flex;
     align-items: center;
+    gap: 16px;
 
     @media only screen and (min-width: 768px) {
         grid-row: 1 / 2;
         grid-column: 2 / 3;
+        gap: 24px;
     }
 }
 
 .delete {
+    border: none;
+    background-color: transparent;
+
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+
+    &:hover path {
+        fill: var(--color-pale-red);
+    }
+
+    &:hover span {
+        color: var(--color-pale-red);
+    }
+
     svg {
+        margin-right: 8px;
+    }
+
+    path {
+        transition: fill 0.1s;
     }
 
     span {
+        color: var(--color-soft-red);
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        transition: color 0.1s;
     }
 }
 
-.reply {
+.reply_edit {
     border: none;
     background-color: transparent;
 

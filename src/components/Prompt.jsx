@@ -1,15 +1,32 @@
 import styles from './../styles/Prompt.module.scss';
 
 const Prompt = function (props) {
-    const type = props.type; // main reply edit
+    const type = props.type;
 
     let buttonText = '';
-    if (props.type === 'main') buttonText = 'Send';
-    if (props.type === 'reply') buttonText = 'Reply';
-    if (props.type === 'update') buttonText = 'Update';
+    let placeholderText = '';
+    let event;
+
+    if (type === 'main') {
+        buttonText = 'Send';
+        placeholderText = 'Add a comment…';
+        event = props.onSubmit;
+    }
+
+    if (type === 'reply') {
+        buttonText = 'Reply';
+    }
+
+    if (type === 'edit') {
+        buttonText = 'Update';
+    }
+
+    if (type === 'delete') {
+        buttonText = 'Delete';
+    }
 
     return (
-        <form onSubmit={props.onSubmit}>
+        <form className={styles.form} onSubmit={event}>
             <picture>
                 <source srcSet={props.webp} type="webp" />
                 <img
@@ -21,9 +38,13 @@ const Prompt = function (props) {
                 />
             </picture>
 
-            <input type="text" />
+            <textarea
+                className={styles.input}
+                type="text"
+                placeholder={placeholderText}
+            />
 
-            <button>{buttonText}</button>
+            <button className={styles.btn}>{buttonText}</button>
         </form>
     );
 };
