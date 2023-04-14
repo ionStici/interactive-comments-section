@@ -2,37 +2,61 @@ import React from 'react';
 import styles from './../styles/Comment.module.scss';
 import assets from './../state/Assets';
 import Prompt from './Prompt';
-import { currentUser, comments } from '../state/Data';
+import { currentUser } from './../state/Data';
 
 const Comment = function (props) {
     const [prompt, setPromp] = React.useState('');
-
     const comment = props.data;
-
     const owner = comment.user.username === currentUser.username;
 
-    const displayPromp = ({ target }) => {
-        const type = target.closest('button').dataset.action_type;
-        const box = target.closest(`.${styles.box}`);
+    // // // // // // // // // // // // // // // // // // // //
+
+    const replyPost = event => {
+        if (prompt !== '') {
+            setPromp('');
+            return;
+        }
+
+        const handleReply = event => {
+            event.preventDefault();
+            props.handleReply(event);
+            setPromp('');
+        };
+
+        setPromp(<Prompt type="reply" onSubmit={handleReply} />);
+    };
+
+    // // // // // // // // // // // // // // // // // // // //
+
+    const editPost = event => {
+        if (prompt !== '') {
+            setPromp('');
+            return;
+        }
+
+        const handleEdit = event => {
+            event.preventDefault();
+            const newContent = event.target.querySelector('textarea').value;
+            comment.content = newContent;
+            setPromp('');
+        };
 
         setPromp(
             <Prompt
-                type={type}
-                target={box}
+                type="edit"
                 content={comment.content}
-                png={currentUser.image.png}
-                webp={currentUser.image.webp}
+                onSubmit={handleEdit}
             />
         );
     };
 
-    const updatePost = event => {
-        event.preventDefault();
-    };
+    // // // // // // // // // // // // // // // // // // // //
 
     const deletePost = event => {
         console.log('delete');
     };
+
+    // // // // // // // // // // // // // // // // // // // //
 
     return (
         <div className={styles.box} data-id={comment.id}>
@@ -82,11 +106,7 @@ const Comment = function (props) {
                 {/*  */}
                 <div className={styles.btnsWrapper}>
                     {owner ? (
-                        <button
-                            className={styles.delete}
-                            onClick={deletePost}
-                            data-action_type="delete"
-                        >
+                        <button className={styles.delete} onClick={deletePost}>
                             <svg
                                 width="12"
                                 height="14"
@@ -103,8 +123,7 @@ const Comment = function (props) {
                     {owner ? (
                         <button
                             className={styles.reply_edit}
-                            onClick={displayPromp}
-                            data-action_type="edit"
+                            onClick={editPost}
                         >
                             <svg
                                 width="14"
@@ -118,8 +137,7 @@ const Comment = function (props) {
                     ) : (
                         <button
                             className={styles.reply_edit}
-                            onClick={displayPromp}
-                            data-action_type="reply"
+                            onClick={replyPost}
                         >
                             <svg
                                 width="14"

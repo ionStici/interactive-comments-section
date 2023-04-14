@@ -7,18 +7,17 @@ import { currentUser, comments } from './state/Data';
 function App() {
     const [id, setId] = React.useState(5);
 
-    const handleSubmit = function (event) {
+    // // // // // // // // // // // // // // // // // // // //
+
+    const handleSubmit = event => {
         event.preventDefault();
-
-        let value;
-
-        value = event.target.querySelector('textarea').value;
-
+        const textarea = event.target.querySelector('textarea');
+        let content = textarea.value;
         setId(prev => prev + 1);
 
         comments.push({
             id: id,
-            content: value,
+            content: content,
             createdAt: 'now',
             score: 0,
             user: {
@@ -30,20 +29,56 @@ function App() {
             },
             replies: [],
         });
+
+        textarea.value = '';
     };
+
+    // // // // // // // // // // // // // // // // // // // //
+
+    const handleReply = event => {
+        event.preventDefault();
+        const textarea = event.target.querySelector('textarea');
+        let content = textarea.value;
+        setId(prev => prev + 1);
+
+        const section = event.target.closest(`.${styles.section}`);
+        const box = section.firstElementChild;
+        const id = box.dataset.id;
+
+        const comment = comments.find(comment => comment.id === +id);
+
+        comment.replies.push({
+            id: id,
+            content: content,
+            createdAt: 'now',
+            score: 0,
+            replyingTo: comment.user.username,
+            user: {
+                image: {
+                    png: currentUser.image.png,
+                    webp: currentUser.image.webp,
+                },
+                username: currentUser.username,
+            },
+        });
+
+        textarea.value = '';
+    };
+
+    // // // // // // // // // // // // // // // // // // // //
 
     return (
         <main>
             {comments.map((comment, i) => {
                 return (
                     <section className={styles.section} key={i}>
-                        <Comment data={comment} />
+                        <Comment data={comment} handleReply={handleReply} />
 
                         {/* prettier-ignore */}
                         <div className={comment.replies[0] ? styles.box_with_replies : ''}>
                             {comment.replies[0]
                                 ? comment.replies.map((comment, i) => {
-                                      return <Comment key={i} data={comment}  />
+                                      return <Comment key={i} data={comment} handleReply={handleReply}  />
                                   })
                                 : undefined}
                         </div>
