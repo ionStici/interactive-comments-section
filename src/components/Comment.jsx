@@ -6,6 +6,7 @@ import { currentUser } from '../state/Data';
 
 const Comment = function (props) {
     const [prompt, setPromp] = React.useState('');
+
     const comment = props.data;
 
     const owner = comment.user.username === currentUser.username;

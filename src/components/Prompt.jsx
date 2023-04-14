@@ -27,16 +27,13 @@ const Prompt = function (props) {
 
     return (
         <form className={styles.form} onSubmit={event}>
-            <picture>
-                <source srcSet={props.webp} type="webp" />
-                <img
-                    className={styles.img}
-                    src={props.png}
-                    width="32"
-                    height="32"
-                    alt="User Photo"
-                />
-            </picture>
+            <img
+                className={styles.img}
+                src={props.png}
+                width="32"
+                height="32"
+                alt="User Photo"
+            />
 
             <textarea
                 className={styles.input}
