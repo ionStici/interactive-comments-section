@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './../styles/Comment.module.scss';
 import assets from './../state/Assets';
 import Prompt from './Prompt';
-import { currentUser } from '../state/Data';
+import { currentUser, comments } from '../state/Data';
 
 const Comment = function (props) {
     const [prompt, setPromp] = React.useState('');
@@ -13,18 +13,29 @@ const Comment = function (props) {
 
     const displayPromp = ({ target }) => {
         const type = target.closest('button').dataset.action_type;
+        const box = target.closest(`.${styles.box}`);
 
         setPromp(
             <Prompt
                 type={type}
+                target={box}
+                content={comment.content}
                 png={currentUser.image.png}
                 webp={currentUser.image.webp}
             />
         );
     };
 
+    const updatePost = event => {
+        event.preventDefault();
+    };
+
+    const deletePost = event => {
+        console.log('delete');
+    };
+
     return (
-        <div className={styles.box}>
+        <div className={styles.box} data-id={comment.id}>
             <article className={styles.comment_wrapper}>
                 {/*  */}
                 <div className={styles.profile}>
@@ -38,7 +49,10 @@ const Comment = function (props) {
                             alt="User Photo"
                         />
                     </picture>
-                    <p className={styles.name}>{comment.user.username}</p>
+                    <p className={styles.name}>
+                        <span>{comment.user.username}</span>
+                        {owner ? <span className={styles.you}>You</span> : ''}
+                    </p>
                     <p className={styles.date}>{comment.createdAt}</p>
                 </div>
                 {/*  */}
@@ -70,7 +84,7 @@ const Comment = function (props) {
                     {owner ? (
                         <button
                             className={styles.delete}
-                            onClick={displayPromp}
+                            onClick={deletePost}
                             data-action_type="delete"
                         >
                             <svg

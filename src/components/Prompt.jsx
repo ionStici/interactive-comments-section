@@ -1,4 +1,5 @@
 import styles from './../styles/Prompt.module.scss';
+import { comments } from '../state/Data';
 
 const Prompt = function (props) {
     const type = props.type;
@@ -17,12 +18,14 @@ const Prompt = function (props) {
         buttonText = 'Reply';
     }
 
+    let id;
+    let value;
     if (type === 'edit') {
         buttonText = 'Update';
-    }
-
-    if (type === 'delete') {
-        buttonText = 'Delete';
+        placeholderText = '';
+        id = props.target.dataset.id;
+        value = props.content;
+        event;
     }
 
     return (
@@ -39,6 +42,7 @@ const Prompt = function (props) {
                 className={styles.input}
                 type="text"
                 placeholder={placeholderText}
+                defaultValue={value}
             />
 
             <button className={styles.btn}>{buttonText}</button>

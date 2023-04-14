@@ -9,7 +9,11 @@ function App() {
 
     const handleSubmit = function (event) {
         event.preventDefault();
-        const value = event.target.querySelector('textarea').value;
+
+        let value;
+
+        value = event.target.querySelector('textarea').value;
+
         setId(prev => prev + 1);
 
         comments.push({
