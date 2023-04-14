@@ -1,5 +1,5 @@
 import assets from './Assets';
-import data from './../data.json';
+import data from './data.json';
 
 const currentUser = data.currentUser;
 const comments = data.comments;
@@ -15,5 +15,8 @@ comments[1].user.image.webp = assets.max_webp;
 
 comments[1].replies[0].user.image.png = assets.ram_png;
 comments[1].replies[0].user.image.webp = assets.amy_webp;
+
+comments[1].replies[1].user.image.png = assets.julio_png;
+comments[1].replies[1].user.image.webp = assets.julio_webp;
 
 export { currentUser, comments };

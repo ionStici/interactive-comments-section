@@ -1,14 +1,12 @@
 import React from 'react';
-import styles from './styles/Comment.module.scss';
-import assets from './state/Assets';
+import styles from './../styles/Comment.module.scss';
+import assets from './../state/Assets';
 
 const Comment = function (props) {
     const comment = props.data;
 
-    // console.log(comment.replies);
-
     return (
-        <section className={styles.section}>
+        <article className={styles.comment_wrapper}>
             {/*  */}
             <div className={styles.profile}>
                 <picture>
@@ -56,7 +54,7 @@ const Comment = function (props) {
                 <span>Reply</span>
             </button>
             {/*  */}
-        </section>
+        </article>
     );
 };
 

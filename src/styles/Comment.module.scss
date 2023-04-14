@@ -2,6 +2,39 @@
 
 .section {
     max-width: 730px;
+    margin: 0 auto;
+}
+
+.box_with_replies {
+    padding-left: 18px;
+    position: relative;
+
+    &::after {
+        content: '';
+
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        top: 0;
+
+        width: 2px;
+        height: 100%;
+        background-color: var(--color-light-gray);
+
+        @media only screen and (min-width: 768px) {
+            left: 43px;
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        padding-left: 88px;
+    }
+}
+
+// // // // // // // // // // // // // // //
+
+.comment_wrapper {
+    max-width: 100%;
     margin: 0 auto 16px auto;
     padding: 16px;
 
@@ -15,6 +48,7 @@
 
     @media only screen and (min-width: 768px) {
         padding: 24px;
+        margin-bottom: 20px;
 
         grid-template-columns: 40px;
         grid-template-rows: 32px 1fr;
