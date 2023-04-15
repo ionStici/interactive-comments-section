@@ -1,11 +1,15 @@
 import React from 'react';
 import styles from './../styles/Comment.module.scss';
+import popupStyles from './../styles/Popup.module.scss';
 import assets from './../state/Assets';
 import Prompt from './Prompt';
-import { currentUser } from './../state/Data';
+import Popup from './Popup';
+import { currentUser, comments } from './../state/Data';
 
 const Comment = function (props) {
     const [prompt, setPromp] = React.useState('');
+    const [popup, setPopup] = React.useState('');
+
     const comment = props.data;
     const owner = comment.user.username === currentUser.username;
 
@@ -53,7 +57,45 @@ const Comment = function (props) {
     // // // // // // // // // // // // // // // // // // // //
 
     const deletePost = event => {
-        console.log('delete');
+        const body = document.body;
+        body.classList.add(styles.overflow_hidden);
+
+        const box = event.target.closest(`.${styles.box}`);
+        const id = box.dataset.id;
+
+        const closePopup = event => {
+            const layout = document.querySelector(`.${popupStyles.layout}`);
+            const wrapper = document.querySelector(`.${popupStyles.wrapper}`);
+            const btn = document.querySelector(`.${popupStyles.no_btn}`);
+            const target = event.target;
+
+            if (target === layout || target === wrapper || target === btn) {
+                body.classList.remove(styles.overflow_hidden);
+                setPopup('');
+            }
+        };
+
+        const deleteComment = () => {
+            body.classList.remove(styles.overflow_hidden);
+            setPopup('');
+
+            const comment = comments.find(comment => comment.id === +id);
+            if (comment) comments.splice(comments.indexOf(comment), 1);
+
+            const commentFromReplies = comments.filter(comment => {
+                return comment.replies.find(comment => comment.id === +id);
+            });
+
+            console.log(commentFromReplies);
+        };
+
+        setPopup(
+            <Popup
+                event={event}
+                closePopup={closePopup}
+                deleteComment={deleteComment}
+            />
+        );
     };
 
     // // // // // // // // // // // // // // // // // // // //
@@ -152,6 +194,7 @@ const Comment = function (props) {
                 </div>
                 {/*  */}
             </article>
+            {popup}
             {prompt}
         </div>
     );

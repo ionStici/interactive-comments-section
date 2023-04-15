@@ -43,9 +43,9 @@ function App() {
 
         const section = event.target.closest(`.${styles.section}`);
         const box = section.firstElementChild;
-        const id = box.dataset.id;
+        const boxId = box.dataset.id;
 
-        const comment = comments.find(comment => comment.id === +id);
+        const comment = comments.find(comment => comment.id === +boxId);
 
         comment.replies.push({
             id: id,
