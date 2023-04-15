@@ -6,6 +6,8 @@ import { currentUser, comments } from './state/Data';
 
 function App() {
     const [id, setId] = React.useState(5);
+    const [update, setUpdate] = React.useState(1);
+    const rerender = () => setUpdate(prev => prev + 1);
 
     // // // // // // // // // // // // // // // // // // // //
 
@@ -72,13 +74,17 @@ function App() {
             {comments.map((comment, i) => {
                 return (
                     <section className={styles.section} key={i}>
-                        <Comment data={comment} handleReply={handleReply} />
+                        <Comment
+                            data={comment}
+                            handleReply={handleReply}
+                            rerender={rerender}
+                        />
 
                         {/* prettier-ignore */}
                         <div className={comment.replies[0] ? styles.box_with_replies : ''}>
                             {comment.replies[0]
                                 ? comment.replies.map((comment, i) => {
-                                      return <Comment key={i} data={comment} handleReply={handleReply}  />
+                                      return <Comment key={i} data={comment} handleReply={handleReply} rerender={rerender}  />
                                   })
                                 : undefined}
                         </div>

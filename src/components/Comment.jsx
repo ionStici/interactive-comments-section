@@ -79,14 +79,23 @@ const Comment = function (props) {
             body.classList.remove(styles.overflow_hidden);
             setPopup('');
 
+            // // // // // // // // // // // // // // // // // // // //
+
             const comment = comments.find(comment => comment.id === +id);
             if (comment) comments.splice(comments.indexOf(comment), 1);
 
-            const commentFromReplies = comments.filter(comment => {
-                return comment.replies.find(comment => comment.id === +id);
-            });
+            // // // // // // // // // // // // // // // // // // // //
 
-            console.log(commentFromReplies);
+            const replies = comments.filter(comment => {
+                return comment.replies.find(comment => comment.id === +id);
+            })[0]?.replies;
+
+            const commentRep = replies?.find(c => c.id === +id);
+            if (commentRep) replies.splice(replies.indexOf(commentRep), 1);
+
+            // // // // // // // // // // // // // // // // // // // //
+
+            props.rerender();
         };
 
         setPopup(
