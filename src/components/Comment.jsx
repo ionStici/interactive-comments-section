@@ -109,6 +109,66 @@ const Comment = function (props) {
 
     // // // // // // // // // // // // // // // // // // // //
 
+    const vote = event => {
+        const btn = event.target;
+
+        const sign = btn.dataset.vote;
+
+        const section = btn.closest(`.${styles.section}`);
+        const sectionId = +section.firstElementChild.dataset.id;
+
+        const box = btn.closest(`.${styles.box}`);
+        const btns = [...box.querySelectorAll(`.${styles.rating_btn}`)];
+
+        const commentId = +btn.closest(`.${styles.box}`).dataset.id;
+        const comment = comments.find(c => c.id === sectionId);
+        const reply = comment?.replies.find(c => c.id === commentId);
+
+        if (event.type === 'mouseover') {
+            if (sectionId === commentId && comment?.voted === true) return;
+            if (reply?.voted === true) return;
+
+            const box = event.target.closest(`.${styles.rating}`);
+            const scoreEl = box.querySelector(`.${styles.rating_score}`);
+            const btns = [...box.querySelectorAll(`.${styles.rating_btn}`)];
+            btns.forEach(btn => btn.classList.add(styles.rating_btn_active));
+
+            if (+scoreEl.textContent === 0) {
+                btns[1].classList.remove(styles.rating_btn_active);
+            }
+
+            return;
+        }
+
+        if (sectionId === commentId) {
+            if (comment.voted === true) return;
+
+            if (sign === '+') comment.score++;
+            if (comment.score < 1) return;
+            if (sign === '-') comment.score--;
+
+            comment.voted = true;
+            btns.forEach(btn => btn.classList.remove(styles.rating_btn_active));
+        } else {
+            if (reply.voted === true) return;
+
+            if (sign === '+') reply.score++;
+            if (reply.score < 1) return;
+            if (sign === '-') reply.score--;
+
+            reply.voted = true;
+            btns.forEach(btn => btn.classList.remove(styles.rating_btn_active));
+        }
+
+        props.rerender();
+    };
+
+    // // // // // // // // // // // // // // // // // // // //
+
+    const check = event => vote(event);
+
+    // // // // // // // // // // // // // // // // // // // //
+
     return (
         <div className={styles.box} data-id={comment.id}>
             <article className={styles.comment_wrapper}>
@@ -143,7 +203,12 @@ const Comment = function (props) {
                 </p>
                 {/*  */}
                 <div className={styles.rating}>
-                    <button className={styles.rating_btn}>
+                    <button
+                        className={`${styles.rating_btn}`}
+                        onClick={vote}
+                        onMouseOver={check}
+                        data-vote="+"
+                    >
                         <svg
                             width="11"
                             height="11"
@@ -153,7 +218,12 @@ const Comment = function (props) {
                         </svg>
                     </button>
                     <p className={styles.rating_score}>{comment.score}</p>
-                    <button className={styles.rating_btn}>
+                    <button
+                        className={`${styles.rating_btn}`}
+                        onClick={vote}
+                        onMouseOver={check}
+                        data-vote="-"
+                    >
                         <svg
                             width="11"
                             height="3"

@@ -22,6 +22,7 @@ function App() {
             content: content,
             createdAt: 'now',
             score: 0,
+            voted: false,
             user: {
                 image: {
                     png: currentUser.image.png,
@@ -60,6 +61,7 @@ function App() {
             content: content,
             createdAt: 'now',
             score: 0,
+            voted: false,
             replyingTo: replyTo.user.username,
             user: {
                 image: {
