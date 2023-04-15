@@ -131,7 +131,16 @@ const Comment = function (props) {
                     <p className={styles.date}>{comment.createdAt}</p>
                 </div>
                 {/*  */}
-                <p className={styles.content}>{comment.content}</p>
+                <p className={styles.content}>
+                    {comment.replyingTo ? (
+                        <span className={styles.replyTo}>
+                            @{comment.replyingTo}
+                        </span>
+                    ) : (
+                        ''
+                    )}
+                    {comment.content}
+                </p>
                 {/*  */}
                 <div className={styles.rating}>
                     <button className={styles.rating_btn}>

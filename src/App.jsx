@@ -46,15 +46,21 @@ function App() {
         const section = event.target.closest(`.${styles.section}`);
         const box = section.firstElementChild;
         const boxId = box.dataset.id;
-
         const comment = comments.find(comment => comment.id === +boxId);
+
+        const replyId = event.target.closest(`.${styles.box}`).dataset.id;
+        const replyToUser = comment.replies.find(c => c.id === +replyId);
+
+        let replyTo;
+        if (replyToUser) replyTo = replyToUser;
+        if (!replyToUser) replyTo = comment;
 
         comment.replies.push({
             id: id,
             content: content,
             createdAt: 'now',
             score: 0,
-            replyingTo: comment.user.username,
+            replyingTo: replyTo.user.username,
             user: {
                 image: {
                     png: currentUser.image.png,
