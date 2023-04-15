@@ -101,19 +101,15 @@
     transition: height 0.35s, padding 0.35s, margin 0.35s;
 }
 
-.img {
-    opacity: 0;
-    transition: opacity 0.5s;
-}
-
-.input {
-    opacity: 0;
-    transition: opacity 0.5s;
-}
-
+.img,
+.input,
 .btn {
     opacity: 0;
-    transition: opacity 0.5s;
+    transition: opacity 0.5s 0.15s;
+
+    @media only screen and (min-width: 768px) {
+        transition: opacity 0.5s;
+    }
 }
 
 .scale {
