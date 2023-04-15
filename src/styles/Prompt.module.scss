@@ -117,11 +117,12 @@
 }
 
 .scale {
-    height: 144px;
+    height: 189px;
     padding: 16px 16px 13px 16px;
     margin-bottom: 16px;
 
     @media only screen and (min-width: 768px) {
+        height: 144px;
         padding: 24px;
     }
 }
